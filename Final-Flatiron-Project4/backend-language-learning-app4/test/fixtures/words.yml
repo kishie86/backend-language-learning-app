@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  image: MyString
+  english_word: MyString
+  non_english_word: MyString
+  spanish_language_id: 1
+
+two:
+  image: MyString
+  english_word: MyString
+  non_english_word: MyString
+  spanish_language_id: 1
