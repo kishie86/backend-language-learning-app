@@ -1,0 +1,148 @@
+import React, { Component } from 'react';
+
+
+class ProgressForm extends Component {
+
+    state={
+
+        name: "",
+        date: "",
+        quiz: "",
+        content: "",
+        
+        
+       
+        
+      }
+
+      handleEdit(e, id){
+       
+        //console.log(this.state)
+        let editProgressForm = {
+          name: this.state.name,
+          date: this.state.date,
+          quiz: this.state.quiz,
+          content: this.state.content,
+          
+          
+          
+      }
+      //console.log(newProgressForm)
+    
+      let reqObj = {}
+        reqObj.headers = {"Content-Type":"application/json"}
+        reqObj.method = "PATCH"
+        reqObj.body = JSON.stringify(editProgressForm)
+        console.log(reqObj)
+      
+    
+      fetch(`http://localhost:3000/api/v1/progress_forms/${id}`, reqObj)
+      .then(res => res.json())
+      .then(newProgressForm =>
+        this.props.addToProgressForm(newProgressForm))
+        e.target.reset()
+      }
+
+
+    
+      handleSubmit(e){
+        e.preventDefault()
+        //console.log(this.state)
+        let newProgressForm = {
+          name: this.state.name,
+          date: this.state.date,
+          quiz: this.state.quiz,
+          content: this.state.content,
+          
+      }
+      //console.log(newProgressForm)
+    
+      let reqObj = {}
+        reqObj.headers = {"Content-Type":"application/json"}
+        reqObj.method = "POST"
+        reqObj.body = JSON.stringify(newProgressForm)
+        console.log(reqObj)
+      
+    
+      fetch('http://localhost:3000/api/v1/progress_forms', reqObj)
+      .then(res => res.json())
+      .then(newProgressForm =>
+        this.props.addToProgressForm(newProgressForm))
+        e.target.reset()
+      }
+
+
+     
+      
+      
+    
+    
+      render() {
+        return (
+         <div>
+            <div>
+              <h1>Progress Form</h1>
+          <form onSubmit={(e) => this.handleSubmit(e)} className="add-newProgres-form" >
+             
+              <input onChange = {(e)=> this.setState({name: e.target.value})} type="text" name="name" placeholder="Enter Name..." className="input-text"/>
+              <br/>
+              <input onChange = {(e)=> this.setState({date: e.target.value})} type="text" name="date" placeholder="Enter Date..." className="input-text"/>
+              <br/>
+              <input onChange = {(e)=> this.setState({quiz: e.target.value})}type="text" name="quiz" placeholder="Enter Quiz..." className="input-text"/>
+              <br/>
+              <input onChange = {(e)=> this.setState({content: e.target.value})} type="text" name="content" placeholder="Enter Content..." className="input-text"/>
+              <br/>
+              {/* <input onChange = {(e)=> this.setState({event_id: e.target.value})} type="text" name="event_id" placeholder="Enter Event..." className="input-text"/> */}
+              {/* <br/> */}
+              {/* <input onChange = {(e)=> this.setState({user_id: e.target.value})} type="text" name="event_id" placeholder="Enter Event..." className="input-text"/> */}
+              {/* <br/> */}
+              <input type="submit" name="submit" value="Create New Progress" className="submit"/>
+            </form>
+            
+           </div>
+          
+           
+
+           
+
+
+
+
+<div>
+  <h1>Edit Progress Form</h1>
+  <form onSubmit={(e) => this.handleSubmit(e, this.props.id)} className="edit-newProgres-form" >
+
+  <input onChange = {(e)=> this.setState({name: e.target.value})} value = {this.props.name} type="text" name="name" placeholder="Enter Name..." />
+    <br/>
+    <input onChange = {(e)=> this.setState({date: e.target.value})} value = {this.props.date} type="text" name="date" placeholder="Enter Date..." />
+    <br/>
+    <input onChange = {(e)=> this.setState({quiz: e.target.value})} value = {this.props.quiz} type="text" name="quiz" placeholder="Enter Quiz..." />
+    <br/>
+    <input onChange = {(e)=> this.setState({content: e.target.value})} value = {this.props.content} type="text" name="content" placeholder="Enter Content..." />
+    <br/>
+    <input type="submit" name="submit" value="Edit Progress Form" className="submit"/>
+
+</form>
+</div>
+</div>
+
+          
+          
+        
+
+        );
+     }
+      
+      }
+      
+
+    
+    
+
+       
+    
+  
+    
+  
+
+export default ProgressForm

@@ -5,6 +5,9 @@ import Login from "./login";
 import Home from "./home";
 import LearnLanguage from "./components/LearnLanguage"
 import PickLanguage from "./components/PickLanguage"
+import AboutUs from "./components/AboutUs"
+import ProgressFormInfo from "./components/ProgressFormInfo"
+import ProgressForm from "./components/ProgressForm"
 //import AuthDemo from "./authdemo";
 
 import { BrowserRouter, Switch, Route, Link, Redirect } from "react-router-dom";
@@ -14,8 +17,14 @@ class App extends Component {
     spanish_languages: [],
     words: [],
     searchBar: "",
+    progress_forms: [],
     user: {},
     loggedIn: false,
+    name: "",
+    date: "",
+    quiz: "",
+    content: "",
+    id: null
   };
 
   setCurrentUser = (user) => {
@@ -85,6 +94,13 @@ class App extends Component {
         words: wordData
       
       }))
+
+      fetch("http://localhost:3000/api/v1/progress_forms")
+      .then(res => res.json())
+      .then(pfData => this.setState({
+        progress_forms: pfData
+      
+      }))
     }
 
 
@@ -95,6 +111,37 @@ class App extends Component {
         searchText: text
       })
         
+    }
+
+    addToProgressForm = (progress_form) => {
+      console.log(progress_form)
+      //if(!this.state.user_events.includes(user_event))
+      this.setState({
+        progress_forms: [...this.state.progress_forms, progress_form]
+      })
+    }
+
+      removeProgressForm = (progress_form) => {
+        console.log(progress_form, 'im deleted')
+        fetch("http://localhost:3000/api/v1/progress_forms/" + progress_form.id, {method: "DELETE"})
+        .then(res => res.json)
+        .then(() => { 
+          this.setState({
+            progress_forms: this.state.progress_forms.filter(pf_form => pf_form != progress_form)
+          })
+        })
+
+      
+    }
+
+    handleEdit =(progress_form)=> {
+      this.setState({
+        name: progress_form.name,
+        date: progress_form.date,
+        quiz: progress_form.quiz,
+        content: progress_form.content,
+        id: progress_form.id
+      })
     }
 
   render() {
@@ -135,6 +182,8 @@ class App extends Component {
             <br/>
             <Link to="/learnlanguage">Learn Language</Link>
             <br/>
+            <Link to="/progressform">Progress Form</Link>
+            <br/>
           <Link to="/help">Help</Link>
             <br/>
          
@@ -161,6 +210,10 @@ class App extends Component {
               {this.state.loggedIn ? <Redirect to="/" /> : <SignUp />}
             </Route>
 
+            <Route  exact path="/About">
+              <AboutUs  />
+              </Route>
+
             <Route  exact path="/PickLanguage">
               <PickLanguage searchBar = {this.searchBar} spanish_languages={filteredLanguage}  />
               </Route>
@@ -169,8 +222,15 @@ class App extends Component {
               <LearnLanguage words={this.state.words} />
               </Route>
 
-
-    
+            <Route exact path="/ProgressForm">
+              <ProgressForm   name={this.state.name} 
+              date={this.state.date}
+              quiz={this.state.quiz}
+              content={this.state.content}
+              id={this.state.id}
+              addToProgressForm={this.addToProgressForm} />
+              <ProgressFormInfo handleEdit={this.handleEdit} removeProgressForm = {this.removeProgressForm} progress_forms={this.state.progress_forms}/>
+              </Route>
             
 
             <Route exact path="/auth">
