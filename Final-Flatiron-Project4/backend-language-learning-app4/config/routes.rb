@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :words
   resources :spanish_languages
   resources :user_languages
+  resources :progress_forms
    post 'login', to: 'auth#create'
   
     end
