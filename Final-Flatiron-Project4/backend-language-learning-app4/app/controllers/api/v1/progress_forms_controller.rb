@@ -1,4 +1,5 @@
 class Api::V1::ProgressFormsController < ApplicationController
+    skip_before_action :authorized, only: [:create, :index ]
     def index
 
         render json: ProgressForm.all.to_json(pf_serializer_option)
