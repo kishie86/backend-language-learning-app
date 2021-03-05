@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import SignInForm from './SignInForm'
-
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
@@ -17,13 +15,10 @@ MDBBtn,
 MDBInput
 } from "mdbreact";
 
-class signup extends Component {
+class SignInForm extends Component {
   state = {
     username: "",
     password: "",
-    email: "",
-    created: false,
-    errorMessage: "",
   };
 
   handleChange = (event) => {
@@ -34,44 +29,41 @@ class signup extends Component {
     });
   };
 
-  createUser = (event) => {
+  login = (event) => {
     event.preventDefault();
     event.target.reset();
-    const { username, email, password } = this.state;
 
-    let user = {
-      username: username,
-      email: email,
-      password: password,
-    };
+    const { username, password } = this.state;
+    const user = { username, password };
 
-    fetch("http://localhost:3000/api/v1/users", {
+    fetch("http://localhost:3000/api/v1/login", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ user }),
     })
       .then((r) => r.json())
       .then((response) => {
-        if (response.status === "created") {
-          this.setState({ created: true, errorMessage: "" });
+        console.log(response)
+        if (response.user){
+          this.props.setCurrentUser(response.user)
+          localStorage.token = response.jwt
+        }else{
+
+          
+          console.log(response.message)
         }
-      })
-      .catch((response) =>
-        this.setState({
-          errorMessage:
-            "Uh-oh! It didn't work...Make sure your server is running!",
-        })
-      );
+       
+      });
   };
 
   render() {
     return (
+    
 
-     
-      <MDBContainer>
+<MDBContainer>
       <MDBRow>
         <MDBCol md="6">
           <MDBCard>
@@ -89,8 +81,8 @@ class signup extends Component {
                     label="Email"
                     icon="envelope"
                     group
-                    
-                    type="email"
+                    name= "email"
+                    type="text"
                     validate
                     error="wrong"
                     success="right"
@@ -145,4 +137,4 @@ class signup extends Component {
   }
 }
 
-export default signup;
+export default SignInForm;
