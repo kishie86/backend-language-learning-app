@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 //import {NavLink} from 'react-router-dom'
 
 
@@ -30,16 +31,17 @@ correctValue = () => {
     return (
 
 
-      <div className="word">
+      <div className="word-card">
     
-        
-        <h2> {this.props.word.english_word}</h2>
-        <h2> <img src={this.props.word.image} style={{width:300}} /></h2>
+        <body>
+        <h2 onClick={()=> this.props.clickAction(this.props.word)}> {this.props.word.english_word}</h2>
+        <h2> <img src={this.props.word.image} style={{width:300}} className="rounded mb-0"/></h2>
         {/* <h2> {this.props.word.non_english_word}</h2> */}
         <input onChange = {this.handleChange} value = {this.state.userinput} placeholder = {"Type word here"}/> 
       {this.state.userinput !== this.props.word.non_english_word ? <p style={{color: "red"}}>Try again</p> : <p style={{color: "green"}}> correct </p>  }
         <br>
         </br>
+        </body>
       </div>
     )
   }

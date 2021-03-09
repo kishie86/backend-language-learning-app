@@ -1,5 +1,24 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import SignInForm from './SignInForm'
+import {Formik} from "formik"
+import EmailValidator from "email-validator"
+import Yup from "yup"
+
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
+import {
+MDBContainer,
+MDBRow,
+MDBCol,
+MDBCard,
+MDBCardBody,
+MDBIcon,
+MDBCardHeader,
+MDBBtn,
+MDBInput
+} from "mdbreact";
 
 class signup extends Component {
   state = {
@@ -7,7 +26,7 @@ class signup extends Component {
     password: "",
     email: "",
     created: false,
-    errorMessage: "",
+    error_message: [],
   };
 
   handleChange = (event) => {
@@ -39,59 +58,97 @@ class signup extends Component {
     })
       .then((r) => r.json())
       .then((response) => {
+       
         if (response.status === "created") {
           this.setState({ created: true, errorMessage: "" });
+        }else{
+          this.setState({error_message: response.errors})
         }
       })
-      .catch((response) =>
-        this.setState({
-          errorMessage:
-            "Uh-oh! It didn't work...Make sure your server is running!",
-        })
-      );
+      // .catch((response) =>
+      //   this.setState({
+      //     errorMessage:
+      //       "Uh-oh! It didn't work...Make sure your server is running!",
+      //   })
+      // );
   };
 
   render() {
     return (
-      <div>
-        {this.state.created ? (
-          <Redirect to="/login" />
-        ) : (
-          <div>
-            <div className="please-log-in">
-              <p>{this.state.errorMessage}</p>
-            </div>
-            <br />
-            <form onSubmit={this.createUser}>
-              <input
-                type="text"
-                name="email"
-                placeholder="Email"
-                onChange={this.handleChange}
-              />
-              <br />
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                onChange={this.handleChange}
-              />
-              <br />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={this.handleChange}
-              />
-              <br />
-              <br />
-              <button type="submit">Submit</button>
-            </form>
-          </div>
-        )}
-        <br />
-        <br />
-      </div>
+
+     
+      <MDBContainer>
+        {this.state.error_message.map(error => <h4 style = {{color: "red", textAlign: "center"}}> {error}</h4>)}
+      <MDBRow className = "signup">
+        <MDBCol md="6">
+          <MDBCard>
+            <MDBCardBody>
+              <MDBCardHeader className="form-header deep-blue-gradient rounded">
+                <h3 className="my-3">
+                  <MDBIcon icon="lock" /> SignUp:
+                </h3>
+              </MDBCardHeader>
+        <form onSubmit={this.createUser} >
+    
+        <div className="grey-text">
+
+        <MDBInput
+                    label="Email"
+                    icon="envelope"
+                    group
+                    name="email"
+                    
+                    type="email"
+                    validate
+                    error="wrong"
+                    success="right"
+                    onChange={this.handleChange}
+                  />
+
+                  <MDBInput
+                    label="Username"
+                    icon="envelope"
+                    group
+                    name= "username"
+                    type="text"
+                    validate
+                    error="wrong"
+                    success="right"
+                    onChange={this.handleChange}
+                  />
+       
+                  <MDBInput
+                    label="Type your password"
+                    icon="lock"
+                    group
+                    name= "password"
+                    type="password"
+                    validate
+                    onChange={this.handleChange}
+                  />
+
+                </div>
+
+
+    <div className="text-center mt-4">
+                <MDBBtn
+                  color="light-blue"
+                  className="mb-3"
+                  type="submit"
+                >
+            Signup
+                </MDBBtn>
+     </div>
+        </form>
+       
+     
+
+</MDBCardBody>
+</MDBCard>
+</MDBCol>
+</MDBRow>
+</MDBContainer>
+
     );
   }
 }

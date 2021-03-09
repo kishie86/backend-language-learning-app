@@ -2,22 +2,31 @@ import React, { Component } from "react";
 import "./App.css";
 import SignUp from "./signup";
 import Login from "./login";
-import Home from "./home";
-import LearnLanguage from "./components/LearnLanguage"
+import Home from "./Home"
+import LearnLanguage from "./container/LearnLanguage"
 import PickLanguage from "./components/PickLanguage"
 import AboutUs from "./components/AboutUs"
 import ProgressFormInfo from "./components/ProgressFormInfo"
 import ProgressForm from "./components/ProgressForm"
+import Help from "./components/Help"
 import AuthDemo from "./authdemo";
+import NavBar from "./cards/NavBar"
+import StoredWords from "./container/StoredWords"
+import editForm from "./components/editForm"
 
 import { BrowserRouter, Switch, Route, Link, Redirect } from "react-router-dom";
+<Route exact path="/" component={Home}></Route>
+
+
 
 class App extends Component {
   state = {
     spanish_languages: [],
     words: [],
-    searchBar: "",
+    searchText: "",
     progress_forms: [],
+    storedWords: [],
+    showForm: true,
     user: {},
     loggedIn: false,
     name: "",
@@ -42,18 +51,36 @@ class App extends Component {
   displayGreeting = () => {
     if (this.state.loggedIn) {
       return (
+        <div className = "please-log-in">
         <h1 className="greeting-text">
+
           Welcome back {this.state.user.username}!
         </h1>
+        </div>
       );
     } else {
       return (
-        <div className="please-log-in">
+        <div className="please-log-in" >
           <h2>Please log in below!</h2>
         </div>
       );
     }
   };
+
+
+  homeGreeting = () => {
+    if (this.state.loggedIn) {
+      return (
+        <div className = "please-log-in">
+        <h4 className="greeting-text">
+
+          Welcome back {this.state.user.username}!
+        </h4>
+        </div>
+      );
+    } 
+  };
+  
 
   componentDidMount = () => {
     let token = localStorage.token;
@@ -143,83 +170,66 @@ class App extends Component {
       })
     }
 
+
+    addToStoredWords = (word) => {
+      if(!this.state.storedWords.includes(word))
+     this.setState({
+      storedWords: [...this.state.storedWords, word]
+     })
+      
+    }
+
+    removeStoredWords = (word) => {
+      this.setState({
+        storedWords: this.state.storedWords.filter(eachword => eachword.id !== word.id)
+      })
+    }
+  
+    
+
   render() {
-    const filteredLanguage = this.state.spanish_languages.filter(spanish_languages => spanish_languages.name.toLowerCase().includes(this.state.searchBar.toLowerCase()) )
+    const filteredLanguage = this.state.spanish_languages.filter(spanish_languages => spanish_languages.name.toLowerCase().includes(this.state.searchText.toLowerCase()) )
     
     return (
+
+      
+  
       <div className="main-div">
-        {this.displayGreeting()}
        
         <BrowserRouter>
-          <Link className="pretty-link" to="/login">
-            Login
-          </Link>
-          <span className="pretty-link"> </span>
-          <br/>
-          <Link className="pretty-link" to="/signup">
-            SignUp
-          </Link>
-          <br />
-          {this.state.loggedIn ? (
-            <span className="pretty-link">
-              <br />
+      
 
-
-              <button onClick={this.logOut}>Log Out</button>
-            </span>
-          ) : null}
-          <br />
-          
-            
-          <Link className="pretty-link" to="/">
-            Home 
-          </Link>
-            <br/>
-
-
-
-          <Link to="/about">About Us</Link>
-            <br/>
-          <Link to="/picklanguage">Pick Language</Link>
-            <br/>
-            <Link to="/learnlanguage">Learn Language</Link>
-            <br/>
-            <Link to="/progressform">Progress Form</Link>
-            <br/>
-          <Link to="/help">Help</Link>
-            <br/>
-
+       
+        <NavBar logOut= {this.logOut}  loggedIn={this.state.loggedIn}/>
 
          
-        
-          <Link className="pretty-link" to="/auth">
-          Auth Check{" "}
-            {!this.state.loggedIn
-              ? "(Works better if you're logged in!)"
-              : "(Try it now you're logged in!)"}
-          </Link>{" "}
-         
-        
-          <br />
+       
+
+
           <Switch>
-            <Route exact path="/">
-              <Home />
+
+    
+
+
+            <Route exact path="/" component={Home}>
+            {this.homeGreeting()}
+              <Home loggedIn={this.state.loggedIn} />
             </Route>
 
             <Route exact path="/login">
+            {this.displayGreeting()}
               {this.state.loggedIn ? (
                 <Redirect to="/" />
               ) : (
                 <Login setCurrentUser={this.setCurrentUser} />
               )}
+            
             </Route>
 
             <Route exact path="/signup">
+           
               {this.state.loggedIn ? <Redirect to="/" /> : <SignUp />}
             </Route>
-
-
-
 
 
             <Route  exact path="/About">
@@ -231,20 +241,38 @@ class App extends Component {
               </Route>
 
             <Route exact path="/LearnLanguage">
-              <LearnLanguage words={this.state.words} />
+            <StoredWords  removeStoredWords= {this.removeStoredWords} storedWords={this.state.storedWords}/>
+              <LearnLanguage addToStoredWords={this.addToStoredWords} words={this.state.words} />
               </Route>
 
             <Route exact path="/ProgressForm">
-              <ProgressForm   name={this.state.name} 
+              <ProgressForm  name={this.state.name} 
               date={this.state.date}
               quiz={this.state.quiz}
               content={this.state.content}
               id={this.state.id}
               addToProgressForm={this.addToProgressForm} />
+
+              <editForm name={this.state.name} 
+              date={this.state.date}
+              quiz={this.state.quiz}
+              content={this.state.content}
+              id={this.state.id}/>
+
+              {/* {this.state.showForm ? <editForm/> : null}  */}
+          
               <ProgressFormInfo handleEdit={this.handleEdit} 
               removeProgressForm = {this.removeProgressForm} 
               progress_forms={this.state.progress_forms}/>
               </Route>
+
+
+              <Route exact path="/help">
+              <Help />
+              </Route>
+
+
+              
             
 
             <Route exact path="/auth">
