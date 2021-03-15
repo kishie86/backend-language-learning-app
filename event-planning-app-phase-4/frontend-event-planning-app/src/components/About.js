@@ -11,7 +11,7 @@ Our company is actively involved in the Houston Chapters of The International Li
 
 Schedule a complimentary consultation with one of our Event Designers today, and let us design your Corporate Holiday Party, Bar/Bat Mitzvah, Prom, Birthday Party, Baby Shower, Engagement Party, Company Event, Graduation Party, Sweet 16, Quinceañera, Grand Opening Event, Anniversary Party, and more!
 
-If you can dream it, we can do it! 
+If you can dream it, we can do it!!
    </p>
    </h4>
   </div>
