@@ -6,10 +6,10 @@ import Header from './Header'
 
 const useStyles = makeStyles((theme)=> ({
   root: {
-    minHeight: '100vh',
-    backgroundImage: `url(${process.env.PUBLIC_URL + 'EventVenueBackground.jpg'})`,
-    backgroundRepeat: 'no-repeat',
-    backgroudSize:'cover',
+    // minHeight: '100vh',
+    // backgroundImage: `url(${process.env.PUBLIC_URL + 'EventVenueBackground.jpg'})`,
+    // backgroundRepeat: 'no-repeat',
+    // backgroudSize:'cover',
   },
 }))
 function Home() {

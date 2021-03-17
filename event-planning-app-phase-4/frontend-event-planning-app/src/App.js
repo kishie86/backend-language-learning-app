@@ -5,6 +5,8 @@ import Home from "./components/Home";
 import OurEvents from "./components/OurEvents";
 import HostProfile from './components/HostProfile';
 import NewEventForm from './components/NewEventForm'
+import NavBar from './components/NavBar'
+
 
 
 import {
@@ -85,58 +87,16 @@ componentDidMount () {
     
       <Router>
        
-        <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home Page</Link>
-              </li>
-              <li>
-                <Link to="/about"> About Us</Link>
-              </li>
-              <li>
-                <Link to="/OurEvents" > Our Events</Link>
-              </li>
-              <li>
-                <Link to="/HostProfile" > Host Profile</Link>
-              </li>
-              <li>
-               < Link to="/NewEventForm"> New Events Form </Link>
-                </li>
-            </ul>
-          </nav>
+    <NavBar/>
+       
 
           {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
 
 
-      
-          <Switch>
 
-            <Route path="/about">
-              <About/>
-            </Route>
-
-            <Route path="/OurEvents">
-              <OurEvents theSearch = {this.theSearch} events = {filteredEvent}/>
-            </Route>
-
-            <Route path ="/HostProfile">
-                <HostProfile removeEvents = {this.removeEvents} user_events = {this.state.user_events}/>
-                </Route> 
-
-            <Route path ="/NewEventForm">
-                <NewEventForm addToEvents= {this.addToEvents} events= {this.state.events}/>
-                </Route> 
-
-            
-            <Route path="/"> 
-              <Home/>
-            </Route>
-
-
-          </Switch>
-        </div>
+ 
+        
       </Router>
 
       
