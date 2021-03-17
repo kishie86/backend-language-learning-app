@@ -1,4 +1,6 @@
 import React from 'react'
+import OurEvents from '../OurEvents'
+import EventCard from "../EventCard"
 import {
     Nav, 
     NavLink, 
@@ -8,7 +10,15 @@ import {
     NavBtnLink
 } from './NavBarElements';
 
-const NavBar = () => {
+class NavBar extends React.Component{
+
+    state = {
+        events: [],
+      
+      }
+
+    render(){
+
     return(
         <>
         <Nav>
@@ -20,7 +30,7 @@ const NavBar = () => {
                 <NavLink to="/about" activeStyle>
                 About
                 </NavLink>
-                <NavLink to="/OutEvents" activeStyle>
+                <NavLink to="/OurEvents" activeStyle events={this.state.events}>
                 Our Events
                 </NavLink>
                 <NavLink to="/HostProfile" activeStyle>
@@ -43,6 +53,7 @@ const NavBar = () => {
             </Nav>
         </>
     )
+}
 }
 
 export default NavBar

@@ -87,17 +87,41 @@ componentDidMount () {
     
       <Router>
        
-    <NavBar/>
+      <NavBar/>
+      
+
+         {/* A <Switch> looks through its children <Route>s and
+             renders the first one that matches the current URL. */}
+
+
+     
+         <Switch>
+
+           <Route path="/about">
+             <About/>
+           </Route>
+
+           <Route path="/OurEvents">
+             <OurEvents theSearch = {this.theSearch} events = {filteredEvent}/>
+           </Route>
+
+           <Route path ="/HostProfile">
+               <HostProfile removeEvents = {this.removeEvents} user_events = {this.state.user_events}/>
+               </Route> 
+
+           <Route path ="/NewEventForm">
+               <NewEventForm addToEvents= {this.addToEvents} events= {this.state.events}/>
+               </Route> 
+
+           
+           <Route path="/"> 
+           
+           </Route>
+
+
+         </Switch>
        
-
-          {/* A <Switch> looks through its children <Route>s and
-              renders the first one that matches the current URL. */}
-
-
-
- 
-        
-      </Router>
+     </Router>
 
       
      
