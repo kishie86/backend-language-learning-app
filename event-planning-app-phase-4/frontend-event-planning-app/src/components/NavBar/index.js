@@ -1,6 +1,5 @@
 import React from 'react'
-import OurEvents from '../OurEvents'
-import EventCard from "../EventCard"
+
 import {
     Nav, 
     NavLink, 
@@ -12,10 +11,6 @@ import {
 
 class NavBar extends React.Component{
 
-    state = {
-        events: [],
-      
-      }
 
     render(){
 
@@ -23,22 +18,20 @@ class NavBar extends React.Component{
         <>
         <Nav>
             <NavLink to="/">
-                <h1>Logo</h1>
+                <h1>Libby's Event</h1>
             </NavLink>
             <Bars/>
             <NavMenu>
                 <NavLink to="/about" activeStyle>
                 About
                 </NavLink>
-                <NavLink to="/OurEvents" activeStyle events={this.state.events}>
+                <NavLink to="/OurEvents" activeStyle>
                 Our Events
                 </NavLink>
                 <NavLink to="/HostProfile" activeStyle>
                 Host Profile
                 </NavLink>
-                <NavLink to="/NewEventForm" activeStyle>
-                New Event Form
-                </NavLink>
+                
                 <NavLink to="/Contact-Us" activeStyle>
                 Contact Us
                 </NavLink>

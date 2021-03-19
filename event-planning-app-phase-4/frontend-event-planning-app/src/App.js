@@ -54,13 +54,7 @@ componentDidMount () {
     }
     //displayEvent = () => this.state.events.filter(event=> event.name.toLowerCase().includes(this.state.search.toLowerCase()))
 
-    addToEvents = (user_event) => {
-      console.log(user_event)
-      //if(!this.state.user_events.includes(user_event))
-      this.setState({
-        user_events: [...this.state.user_events, user_event]
-      })
-    }
+  
 
     // removeEvents = (user_event) => {
     //   console.log(user_event)
@@ -85,6 +79,7 @@ componentDidMount () {
     const filteredEvent = this.state.events.filter(events => events.name.toLowerCase().includes(this.state.searchText.toLowerCase()) )
     return (
     
+     
       <Router>
        
       <NavBar/>
@@ -107,10 +102,6 @@ componentDidMount () {
 
            <Route path ="/HostProfile">
                <HostProfile removeEvents = {this.removeEvents} user_events = {this.state.user_events}/>
-               </Route> 
-
-           <Route path ="/NewEventForm">
-               <NewEventForm addToEvents= {this.addToEvents} events= {this.state.events}/>
                </Route> 
 
            

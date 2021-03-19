@@ -1,25 +1,50 @@
 import React, { Component } from 'react';
 
 
- function UEContainer(props) {
+ class UEContainer extends Component {
+   state = {
+    value:"Some Text",
+     isInEditMode: false
+   }
 
-    return (
+   changeEditMode = () =>{
+    
+    this.setState({
+      isInEditMode: !this.state.isInEditMode
+    })
+   
+   }
 
-      <div  className="card">
+    render(){
+    return this.state.isInEditMode ?
+      <div>
+      <input 
+        type="text"
+        defaultValue={this.state.value}/>
+        </div>:
+
+      <div className="card">
         <div>
+
+          
 
         {/* <h2>Location: {this.props.user_event.user.name}</h2> */}
-        <h2>Location: {props.user_event.location}</h2>
-        <h2>Venue: {props.user_event.venue}</h2>
-        <h2>Date:{props.user_event.date}</h2>
-        <h2>Time: {props.user_event.time}</h2>
+        <h2 onDoubleClick= {this.changeEditMode} value = {this.state.location}>Location: {this.props.user_event.location}</h2>
+        <h2 onDoubleClick= {this.changeEditMode} value = {this.state.venue}>Venue: {this.props.user_event.venue}</h2>
+        <h2 onDoubleClick= {this.changeEditMode} value = {this.state.date}>Date:{this.props.user_event.date}</h2>
+        <h2 onDoubleClick= {this.changeEditMode} value = {this.state.time}>Time: {this.props.user_event.time}</h2>
         </div>
         <div>
-        <button onClick = {() => props.removeEvents(props.user_event)}>Remove Event</button>
+        <button onClick = {() => this.props.removeEvents(this.props.user_event)}>Remove Event</button>
+        <br/>
+        <button >Edit Event</button>
+        
         </div>
       </div>
+    
       
-      
-    )
+    
     }
+  }
+
 export default UEContainer

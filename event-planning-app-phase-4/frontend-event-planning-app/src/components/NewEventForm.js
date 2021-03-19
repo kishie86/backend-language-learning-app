@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class NewEventForm extends Component {
 
   state={
-
+    user_events: "",
     location: "",
     venue: "",
     date: "",
@@ -11,6 +11,45 @@ class NewEventForm extends Component {
     event: ""
     
   }
+
+  addToEvents = (user_event) => {
+    console.log(user_event)
+    //if(!this.state.user_events.includes(user_event))
+    this.setState({
+      user_events: [...this.state.user_events, user_event]
+    })
+  }
+
+  handleEdit(e, id){
+       
+    console.log(e)
+
+    let editUserEvents = {
+      location: this.state.location,
+      venue: this.state.venue,
+      date: this.state.date,
+      time: this.state.time,
+      event_id: 1,
+      user_id: 1
+  }
+
+  
+  //console.log(newProgressForm)
+
+  let reqObj = {}
+    reqObj.headers = {"Content-Type":"application/json"}
+    reqObj.method = "PATCH"
+    reqObj.body = JSON.stringify(editUserEvents)
+    console.log(reqObj)
+  
+
+  fetch(`http://localhost:3000/api/v1/user_events/${id}`, reqObj)
+  .then(res => res.json())
+  .then(editUserEvents =>
+    this.props.addToProgressForm(editUserEvents))
+    e.target.reset()
+  }
+
 
   handleSubmit(e){
     e.preventDefault()
@@ -35,18 +74,20 @@ class NewEventForm extends Component {
   fetch('http://localhost:3000/api/v1/user_events', reqObj)
   .then(res => res.json())
   .then(newEvent =>
-    this.props.addToEvents(newEvent))
+    this.state.addToEvents(newEvent))
     e.target.reset()
+    
   }
+
   
 
 
   render() {
     return (
      
-        <div>
+        <div className="add-newEvent-form"  >
           <h1>New Event Form</h1>
-      <form onSubmit={(e) => this.handleSubmit(e)} className="add-newEvent-form" >
+      <form onSubmit={(e) => this.handleSubmit(e)} className= "row justify-content-center" >
          
           <input onChange = {(e)=> this.setState({location: e.target.value})} type="text" name="location" placeholder="Enter Event City Location..." className="input-text"/>
           <br/>
@@ -61,6 +102,7 @@ class NewEventForm extends Component {
           {/* <input onChange = {(e)=> this.setState({user_id: e.target.value})} type="text" name="event_id" placeholder="Enter Event..." className="input-text"/> */}
           {/* <br/> */}
           <input type="submit" name="submit" value="Create New Event" className="submit"/>
+          
         </form>
         </div>
      

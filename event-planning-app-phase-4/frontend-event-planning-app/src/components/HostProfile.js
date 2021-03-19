@@ -1,12 +1,13 @@
 import React from 'react';
 import UEContainer from './UEContainer'
+import NewEventForm from "./NewEventForm"
 
 
 function HostProfile(props) {
     return( 
       
-
-    <div id ="ue_container" >
+      <div id ="ue_container" >
+      <NewEventForm addToEvents={props.addToEvents} />
 
       <h1>Upcoming Events</h1>
 
