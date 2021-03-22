@@ -2,21 +2,15 @@ import React, { Component } from 'react';
 
 
  class UEContainer extends Component {
-   state = {
-    value:"Some Text",
-     isInEditMode: false
-   }
 
-   changeEditMode = () =>{
-    
-    this.setState({
-      isInEditMode: !this.state.isInEditMode
-    })
-   
-   }
+  state = {
+    value: "some text",
+    isInEditMode: false
+  }
 
     render(){
-    return this.state.isInEditMode ?
+  
+      return this.state.isInEditMode ?
       <div>
       <input 
         type="text"
@@ -25,9 +19,6 @@ import React, { Component } from 'react';
 
       <div className="card">
         <div>
-
-          
-
         {/* <h2>Location: {this.props.user_event.user.name}</h2> */}
         <h2 onDoubleClick= {this.changeEditMode} value = {this.state.location}>Location: {this.props.user_event.location}</h2>
         <h2 onDoubleClick= {this.changeEditMode} value = {this.state.venue}>Venue: {this.props.user_event.venue}</h2>
@@ -41,10 +32,8 @@ import React, { Component } from 'react';
         
         </div>
       </div>
-    
-      
-    
+
     }
   }
-
+    
 export default UEContainer
