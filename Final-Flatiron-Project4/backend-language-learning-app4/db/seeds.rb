@@ -13,6 +13,7 @@ UserLanguage.destroy_all
 Word.destroy_all
 ProgressForm.destroy_all
 Tutor.destroy_all
+Review.destroy_all
 
 
 u1 = User.create(username: "Kishana Liburd", email: "kishana.liburd@gmail.com", password: "cloud")
@@ -59,5 +60,10 @@ t3 = Tutor.create(name: "Michael O'Conner", image: "https://cbmcfresno.com/wp-co
 t4 = Tutor.create(name: "Justin Heigle", image: "https://www.nicepng.com/png/detail/7-77391_businessman-transparent-business-man-png.png", language: "German", bio: "Studied at the Universy of London. Born in Germany", years_of_experience: "12", review: "Help you pick on concepts real quick!", user_id: u1.id )
 t5 = Tutor.create(name: "Teressa Palone", image: "https://www.quickanddirtytips.com/sites/default/files/styles/host_in_header/public/Mignon%20Fogarty%20Headshot%20-%20Final_0.png?itok=jTjs9X1j", language: "Italian", bio: "Studied at the University of Pennsylvania. Traveled back and forth the Italy for 15 years." , years_of_experience: "8", review: "You can tell she's passionate about her job!", user_id: u2.id )
 
+r1 = Review.create(title: "Amazing Tutor!", description: "Teaches with such clarity.", score: "5", tutor_id: t1.id)
+r1 = Review.create(title: "Great Tutor!", description: "Was able to pick up concepts fast!", score: "4", tutor_id: t2.id)
+r1 = Review.create(title: "The Best!", description: "I will continue to use the tutor for everything!", score: "5", tutor_id: t3.id)
+r1 = Review.create(title: "Second to none!", description: "Best tutor I ever had.", score: "5", tutor_id: t4.id)
+r1 = Review.create(title: "Can't Complain!", description: "Was always prompt and readily available.", score: "4", tutor_id: t5.id)
 
 
